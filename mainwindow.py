@@ -55,29 +55,33 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.textUnion = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textUnion.setEnabled(False)
+        self.textUnion.setEnabled(True)
         self.textUnion.setObjectName("textUnion")
-        self.gridLayout.addWidget(self.textUnion, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.textUnion, 0, 0, 2, 1)
         self.textDifer = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textDifer.setEnabled(False)
+        self.textDifer.setEnabled(True)
         self.textDifer.setObjectName("textDifer")
-        self.gridLayout.addWidget(self.textDifer, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.textDifer, 0, 1, 2, 1)
         self.textInter = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textInter.setEnabled(False)
+        self.textInter.setEnabled(True)
         self.textInter.setObjectName("textInter")
-        self.gridLayout.addWidget(self.textInter, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.textInter, 2, 0, 2, 1)
         self.textDifer_2 = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textDifer_2.setEnabled(False)
+        self.textDifer_2.setEnabled(True)
         self.textDifer_2.setObjectName("textDifer_2")
-        self.gridLayout.addWidget(self.textDifer_2, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.textDifer_2, 2, 1, 2, 1)
         self.textCart = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textCart.setEnabled(False)
+        self.textCart.setEnabled(True)
         self.textCart.setObjectName("textCart")
-        self.gridLayout.addWidget(self.textCart, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.textCart, 4, 0, 2, 2)
         self.textMisc = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
-        self.textMisc.setEnabled(False)
+        self.textMisc.setEnabled(True)
         self.textMisc.setObjectName("textMisc")
-        self.gridLayout.addWidget(self.textMisc, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.textMisc, 6, 0, 2, 1)
+        self.textUniversal = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
+        self.textUniversal.setEnabled(True)
+        self.textUniversal.setObjectName("textUniversal")
+        self.gridLayout.addWidget(self.textUniversal, 6, 1, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -88,6 +92,7 @@ class Ui_MainWindow(object):
     def handleClick(self):
         A = self.lineEditSetA.text().split(",")
         B = self.lineEditSetB.text().split(",")
+        U = op.removeElements(A + B)
         union = op.Union(A, B)
         inter = op.Intersection(A, B)
         diff_1 = op.Difference(A, B)
@@ -95,8 +100,8 @@ class Ui_MainWindow(object):
         cart = op.Cartesian(A, B)
         equal = op.Equal(A, B)
         subset = op.Subset(A, B)
-        msg1 = "A and B are equals" if equal else "A and B are not equals"
-        msg2 = "A are a subset of B" if equal else "A arent a subset of B"
+        msg1 = "A y B son iguales" if equal else "A y B no son iguales"
+        msg2 = "B es un subconjunto A" if subset else "B no es un subconjunto de B"
 
         self.textUnion.setPlainText(','.join(str(e) for e in union))
         self.textInter.setPlainText(','.join(str(e) for e in inter))
@@ -104,13 +109,15 @@ class Ui_MainWindow(object):
         self.textDifer_2.setPlainText(','.join(str(e) for e in diff_2))
         self.textCart.setPlainText(','.join(str(e) for e in cart))
         self.textMisc.setPlainText(f"{msg1}\n{msg2}")
+        self.textUniversal.setPlainText(','.join(str(e) for e in U))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.calculateButton.setText(_translate("MainWindow", "Calculate"))
-        self.labelSetB.setText(_translate("MainWindow", "Set B"))
-        self.labelSetA.setText(_translate("MainWindow", "Set A"))
+        MainWindow.setWindowTitle(_translate(
+            "MainWindow", "Teoria de conjuntos"))
+        self.calculateButton.setText(_translate("MainWindow", "Calcular"))
+        self.labelSetB.setText(_translate("MainWindow", "Conjunto B"))
+        self.labelSetA.setText(_translate("MainWindow", "Conjunto A"))
         self.textUnion.setPlainText(_translate("MainWindow", "Union"))
         self.textDifer.setPlainText(
             _translate("MainWindow", "Diferencia A - B"))
@@ -119,4 +126,6 @@ class Ui_MainWindow(object):
             _translate("MainWindow", "Diferencia B - A"))
         self.textCart.setPlainText(_translate(
             "MainWindow", "Producto Cartesiano"))
-        self.textMisc.setPlainText(_translate("MainWindow", "Misc"))
+        self.textMisc.setPlainText(_translate("MainWindow", "Propocisiones"))
+        self.textUniversal.setPlainText(
+            _translate("MainWindow", "Conjunto Universal"))
